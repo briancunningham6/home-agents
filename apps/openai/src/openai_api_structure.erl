@@ -160,7 +160,7 @@ get_endpoints(fine_tuning) ->
             path => "/fine_tuning/jobs",
             description => "List your organization's fine-tuning jobs.",
             required_params => [],
-            optional_params => [limit, after, before]
+            optional_params => [limit, 'after', before]
         },
         retrieve_fine_tuning_job => #{
             method => get,
@@ -181,7 +181,7 @@ get_endpoints(fine_tuning) ->
             path => "/fine_tuning/jobs/:fine_tuning_id/events",
             description => "Get status updates for a fine-tuning job.",
             required_params => [fine_tuning_id],
-            optional_params => [after, limit, stream]
+            optional_params => ['after', limit, stream]
         }
     };
 
@@ -304,7 +304,7 @@ get_endpoints(assistants) ->
             description => "Returns a list of assistants.",
             required_params => [],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         },
         create_assistant_file => #{
@@ -334,7 +334,7 @@ get_endpoints(assistants) ->
             description => "Returns a list of file associations for an assistant.",
             required_params => [assistant_id],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         }
     };
@@ -410,7 +410,7 @@ get_endpoints(messages) ->
             description => "Returns a list of messages for a given thread.",
             required_params => [thread_id],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         },
         retrieve_message_file => #{
@@ -426,7 +426,7 @@ get_endpoints(messages) ->
             description => "Returns a list of message files.",
             required_params => [thread_id, message_id],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         }
     };
@@ -465,7 +465,7 @@ get_endpoints(runs) ->
             description => "Returns a list of runs belonging to a thread.",
             required_params => [thread_id],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         },
         submit_tool_outputs => #{
@@ -506,7 +506,7 @@ get_endpoints(runs) ->
             description => "Returns a list of run steps belonging to a run.",
             required_params => [thread_id, run_id],
             optional_params => [
-                limit, order, after, before
+                limit, order, 'after', before
             ]
         }
     };
@@ -536,7 +536,7 @@ get_endpoints(batch) ->
             description => "List batches.",
             required_params => [],
             optional_params => [
-                limit, after
+                limit, 'after'
             ]
         },
         cancel_batch => #{
@@ -552,7 +552,7 @@ get_endpoints(batch) ->
             description => "List batch jobs.",
             required_params => [batch_id],
             optional_params => [
-                limit, after, status
+                limit, 'after', status
             ]
         },
         list_all_batch_jobs => #{
@@ -561,7 +561,7 @@ get_endpoints(batch) ->
             description => "List all batch jobs.",
             required_params => [],
             optional_params => [
-                limit, after, status
+                limit, 'after', status
             ]
         },
         create_batch_file => #{
@@ -577,7 +577,7 @@ get_endpoints(batch) ->
             description => "List batch files.",
             required_params => [batch_id],
             optional_params => [
-                limit, after
+                limit, 'after'
             ]
         }
     };

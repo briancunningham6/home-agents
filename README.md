@@ -102,7 +102,7 @@ You can also access the OpenAI API directly:
 agent:ensure_api_client(chat).
 
 % Create a chat completion
-Model = <<"gpt-4o">>,
+Model = <<"gpt-4.1">>,
 Messages = [
     #{role => <<"system">>, content => <<"You are a helpful assistant.">>},
     #{role => <<"user">>, content => <<"What is the capital of France?">>}

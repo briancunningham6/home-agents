@@ -23,9 +23,13 @@ generate_module(GroupName, OutputDir) ->
     case file:write_file(Filename, Source) of
         ok ->
             % Compile the module
-            case compile:file(Filename, [return_errors]) of
-                {ok, Module, _Bin} -> 
-                    {ok, Module};
+            case compile:file(Filename, [return_errors, {outdir, OutputDir}]) of
+                {ok, Module, Bin} -> 
+                    % Load the binary
+                    case code:load_binary(Module, atom_to_list(Module) ++ ".erl", Bin) of
+                        {module, _} -> {ok, Module};
+                        Error -> {error, {load_error, Error}}
+                    end;
                 {error, Errors, _Warnings} -> 
                     {error, {compile_errors, Errors}}
             end;
@@ -153,8 +157,8 @@ generate_function(EndpointName, Method, Path, Description, ReqParams, OptParams)
         [EndpointName, string:join([atom_to_list(Param) ++ ":term()" || Param <- ReqParams] ++ ["Options::map()"], ", ")]
     ),
     
-    % Create request map
-    RequestMapItems = [io_lib:format("~s => ~s", [Param, Param]) || Param <- ReqParams],
+    % Create request map with actual variable names (not atoms)
+    RequestMapItems = [io_lib:format("~s => ~s", [Param, atom_to_list(Param)]) || Param <- ReqParams],
     RequestMap = 
         case RequestMapItems of
             [] -> "OptionsWithDefaults";

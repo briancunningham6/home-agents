@@ -34,7 +34,7 @@
     tool_executor/5
 ]).
 
--define(DEFAULT_MODEL, <<"gpt-4o">>).
+-define(DEFAULT_MODEL, <<"gpt-4.1">>).
 -define(DEFAULT_TIMEOUT, 60000).
 
 %% Application callback
@@ -322,8 +322,8 @@ handle_follow_up(Model, AllMessages, Options) ->
 
 %% Register an agent process
 register_agent(SessionId, Pid) ->
-    agent_registry ! {register, SessionId, Pid}.
+    agent_registry:register_agent(SessionId, Pid).
 
 %% Unregister an agent process
 unregister_agent(SessionId) ->
-    agent_registry ! {unregister, SessionId}.
+    agent_registry:unregister_agent(SessionId).

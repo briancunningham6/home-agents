@@ -1,0 +1,77 @@
+#!/usr/bin/env escript
+%%! -pa . -pa _build/default/lib/agent/ebin -pa _build/default/lib/openai/ebin -pa _build/default/lib/jsx/ebin
+%% -*- erlang -*-
+%%
+%% A simple escript-based CLI for interacting with the Erlang Agent for OpenAI API.
+%%
+%% Usage:
+%%   cli run --prompt "Your prompt here" --tools "tool1,tool2" [--model "gpt-4"] [--system "System message"] [--timeout 120000]
+
+main(Args) ->
+    Options = parse_args(Args, #{}),
+    case maps:get(cmd, Options, undefined) of
+        run -> run_agent(Options);
+        undefined -> usage("Command not specified");
+        Other -> usage(io_lib:format("Unknown command: ~p", [Other]))
+    end.
+
+parse_args([], Acc) ->
+    Acc;
+parse_args(["run" | Rest], Acc) ->
+    parse_args(Rest, maps:put(cmd, run, Acc));
+parse_args(["--prompt", Prompt | Rest], Acc) ->
+    parse_args(Rest, maps:put(prompt, Prompt, Acc));
+parse_args(["--tools", Tools | Rest], Acc) ->
+    parse_args(Rest, maps:put(tools, split_tools(Tools), Acc));
+parse_args(["--model", Model | Rest], Acc) ->
+    parse_args(Rest, maps:put(model, Model, Acc));
+parse_args(["--system", Sys | Rest], Acc) ->
+    parse_args(Rest, maps:put(system_message, Sys, Acc));
+parse_args(["--timeout", TimeoutStr | Rest], Acc) ->
+    case catch list_to_integer(TimeoutStr) of
+        Timeout when is_integer(Timeout) ->
+            parse_args(Rest, maps:put(timeout, Timeout, Acc));
+        _ -> usage("Invalid timeout value: " ++ TimeoutStr)
+    end;
+parse_args([Unknown | _], _Acc) ->
+    usage("Unknown argument: " ++ Unknown).
+
+split_tools(Str) ->
+    [list_to_atom(string:trim(T)) || T <- string:tokens(Str, ",")].
+
+run_agent(Options) ->
+    PromptStr = get_required(Options, prompt),
+    Tools = maps:get(tools, Options, []),
+    PromptBin = list_to_binary(PromptStr),
+    %% Build Options map for agent:run_agent/3
+    OptMap = build_opts(Options),
+    %% Start application
+    {ok, _} = application:ensure_all_started(agent),
+    Response = case maps:size(OptMap) > 0 of
+        true -> agent:run_agent(PromptBin, Tools, OptMap);
+        false -> agent:run_agent(PromptBin, Tools)
+    end,
+    io:format("~p~n", [Response]).
+
+build_opts(Options) ->
+    lists:foldl(fun({Key, Val}, Acc) ->
+        case Key of
+            model -> maps:put(model, list_to_binary(Val), Acc);
+            system_message -> maps:put(system_message, list_to_binary(Val), Acc);
+            timeout -> maps:put(timeout, Val, Acc);
+            _ -> Acc
+        end
+    end, #{}, maps:to_list(Options)).
+
+get_required(Options, Key) ->
+    case maps:find(Key, Options) of
+        {ok, Val} -> Val;
+        error -> usage("Missing required option: " ++ atom_to_list(Key))
+    end.
+
+usage(Msg) ->
+    Print = fun(Line) -> io:format("~s~n", [Line]) end,
+    Print("Error: " ++ Msg),
+    Print(""),
+    Print("Usage: cli run --prompt \"Your prompt\" --tools \"tool1,tool2\" [--model \"gpt-4\"] [--system \"System msg\"] [--timeout 120000]"),
+    halt(1).

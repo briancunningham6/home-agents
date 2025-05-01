@@ -107,11 +107,11 @@ handle_info({'DOWN', _MonitorRef, process, Pid, _Reason}, State) ->
 handle_info(cleanup_stale_agents, State) ->
     % Remove agents that haven't been active for more than 10 minutes
     Now = os:timestamp(),
-    Threshold = timer:now_diff(Now, {0, 600, 0}), % 10 minutes in microseconds
+    Threshold = 600 * 1000000, % 10 minutes in microseconds
     
     NewAgents = maps:filter(
         fun(_SessionId, {_Pid, Timestamp}) ->
-            timer:now_diff(Timestamp, {0, 0, 0}) >= Threshold
+            timer:now_diff(Now, Timestamp) < Threshold
         end,
         State#state.agents
     ),
