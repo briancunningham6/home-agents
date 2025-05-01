@@ -1,0 +1,39 @@
+ # Erlang/OTP build artifacts
+ /_build/
+ /rel/
+
+ # Crash dumps and logs
+ erl_crash.dump
+ *.dump
+ *.log
+
+ # Compiler artifacts
+ *.beam
+
+ # Dependency directories
+ /deps/
+
+ # Release artifacts
+ *.ez
+ *.tar.gz
+ *.tgz
+ *.zip
+
+ # Test coverage
+ cover/
+ cover_data/
+ *.coverdata
+
+ # Erlang cookie
+ .erlang.cookie
+
+ # Editor temporary files
+ .DS_Store
+ Thumbs.db
+ *.swp
+ *~
+
+ # IDE directories
+ .idea/
+ .vscode/
+ *.iml

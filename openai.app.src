@@ -1,0 +1,24 @@
+{application, openai, [
+    {description, "Erlang client for OpenAI API with dynamic client generation"},
+    {vsn, "0.1.0"},
+    {registered, [
+        openai_sup,
+        openai_generator_sup,
+        openai_clients_sup,
+        openai_generator,
+        openai_rate_limiter,
+        openai_config
+    ]},
+    {applications, [
+        kernel,
+        stdlib,
+        inets,
+        ssl,
+        jsx
+    ]},
+    {mod, {openai_app, []}},
+    {env, [
+        {auto_start_groups, [chat, completions, embeddings]},
+        {output_dir, "/tmp/openai-erlang"}
+    ]}
+]}.
