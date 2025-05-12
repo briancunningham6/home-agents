@@ -1,0 +1,32 @@
+Response = agent:run_agent(Prompt, ToolNames).
+{error,{error,function_clause,
+              [{openai_chat,create_chat_completion,
+                            [<<"gpt-4.1">>,
+                             [#{role => <<"system">>,
+                                content => <<"Erlang agent assistant">>},
+                              #{role => <<"user">>,
+                                content => <<"What is the current time?">>}],
+                             #{tools =>
+                                   [#{<<"description">> => <<"Read file contents">>,
+                                      <<"name">> => <<"file_read">>,
+                                      <<"parameters">> =>
+                                          #{<<"properties">> =>
+                                                #{<<"path">> =>
+                                                      #{<<"description">> => <<"The path to the file to read">>,
+                                                        <<"type">> => <<"string">>}},
+                                            <<"required">> => [<<"path">>],
+                                            <<"type">> => <<"object">>}},
+                                    #{<<"description">> => <<"Execute shell commands">>,
+                                      <<"name">> => <<"shell">>,
+                                      <<"parameters">> =>
+                                          #{<<"properties">> =>
+                                                #{<<"command">> =>
+                                                      #{<<"description">> => <<"The shell command to execute">>,
+                                                        <<"type">> => <<"string">>}},
+                                            <<"required">> => [<<"command">>],
+                                            <<"type">> => <<"object">>}}],
+                               tool_choice => <<"auto">>}],
+                            [{file,"/tmp/openai-erlang/openai_chat.erl"},{line,50}]},
+               {agent,agent_process,5,
+                      [{file,"/Users/user/dev/home-agents/apps/agent/src/agent.erl"},
+                       {line,182}]}]}}
