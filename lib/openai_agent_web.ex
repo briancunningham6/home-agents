@@ -20,3 +20,4 @@ defmodule OpenAiAgentWeb do
       import Phoenix.LiveView.Helpers
     end
   end
+end
