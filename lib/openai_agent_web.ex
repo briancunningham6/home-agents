@@ -2,9 +2,18 @@
 defmodule OpenAiAgentWeb do
   def live_view do
     quote do
-      use Phoenix.LiveView
-      import Phoenix.Component
-      
+      use Phoenix.LiveView,
+        layout: {OpenAiAgentWeb.Layouts, :app}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def view do
+    quote do
+      use Phoenix.View,
+        root: "lib/openai_agent_web/templates"
+
       unquote(view_helpers())
     end
   end
@@ -19,5 +28,9 @@ defmodule OpenAiAgentWeb do
       # Import LiveView helpers
       import Phoenix.LiveView.Helpers
     end
+  end
+
+  defmacro __using__(which) when is_atom(which) do
+    apply(__MODULE__, which, [])
   end
 end
