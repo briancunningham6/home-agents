@@ -1,0 +1,11 @@
+modules = ["bash"]
+compile = "make"
+run = "./rebar3 shell"
+
+[nix]
+channel = "stable-24_05"
+packages = ["erlang_27"]
+
+[deployment]
+build = ["sh", "-c", "make"]
+run = ["sh", "-c", "./rebar3 shell"]
