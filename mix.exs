@@ -25,7 +25,9 @@ defmodule OpenAiAgent.MixProject do
       {:phoenix_live_view, "~> 0.19.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:erlport, "~> 0.10.1"}
+      {:erlport, "~> 0.10.1"},
+      {:jason, "~> 1.0"},
+      {:plug_cowboy, "~> 2.5"}
     ]
   end
 end
