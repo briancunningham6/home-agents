@@ -16,7 +16,6 @@
         ssl,
         jsx
     ]},
-    {mod, {openai_app, []}},
     {env, [
         {auto_start_groups, [chat, completions, embeddings]},
         {output_dir, "/tmp/openai-erlang"}

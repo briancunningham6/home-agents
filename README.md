@@ -55,7 +55,7 @@ Response = agent:run_agent(Prompt, ToolNames).
 
 % Run with custom options
 Options = #{
-    model => <<"gpt-4">>,
+    model => <<"gpt-4.1-mini">>,
     system_message => <<"You are a helpful assistant with access to system tools.">>,
     timeout => 120000  % 2 minutes
 },

@@ -34,7 +34,7 @@
     tool_executor/5
 ]).
 
--define(DEFAULT_MODEL, <<"gpt-4.1">>).
+-define(DEFAULT_MODEL, <<"gpt-4.1-mini">>).
 -define(DEFAULT_TIMEOUT, 60000).
 
 %% Application callback

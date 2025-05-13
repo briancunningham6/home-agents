@@ -5,7 +5,6 @@
                            openai_generator,openai_rate_limiter,
                            openai_config]},
               {applications,[kernel,stdlib,inets,ssl,jsx]},
-              {mod,{openai_app,[]}},
               {env,[{auto_start_groups,[chat,completions,embeddings]},
                     {output_dir,"/tmp/openai-erlang"}]},
               {modules,[openai_api_structure,openai_app,
