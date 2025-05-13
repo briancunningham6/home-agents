@@ -8,6 +8,8 @@ defmodule OpenAiAgent.Application do
       OpenAiAgentWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: OpenAiAgent.PubSub},
+      # Start the agent registry
+      {agent_registry, []},
       # Start the Endpoint
       OpenAiAgentWeb.Endpoint
     ]
