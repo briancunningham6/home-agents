@@ -9,7 +9,7 @@ defmodule OpenAiAgent.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: OpenAiAgent.PubSub},
       # Start the agent registry
-      {agent_registry, []},
+      {:"agent_registry", []},
       # Start the Endpoint
       OpenAiAgentWeb.Endpoint
     ]
