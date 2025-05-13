@@ -29,7 +29,7 @@ defmodule OpenAiAgent.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.6"}
     ]
   end
 end
